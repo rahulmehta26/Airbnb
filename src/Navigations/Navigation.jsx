@@ -132,14 +132,23 @@ export default function StackTabs() {
           options={({ navigation }) => ({
             presentation: "modal",
             headerShown: true,
+            headerTitle: "Login & Signup",
+            headerLeftContainerStyle: {
+              flex:1
+            },
+            headerTitleAlign:'center',
+            headerTitleStyle:{
+              fontSize:24
+            },
             headerLeft: () => (
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}
+                className = 'pl-5'
               >
                 <Ionicons
                   name="close-outline"
-                  size={iconSize}
+                  size={25}
                   color={"black"}
                 />
               </TouchableOpacity>

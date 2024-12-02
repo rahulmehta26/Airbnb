@@ -4,7 +4,7 @@
     "slug": "Airbnb",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/airbnb.png",
+    "icon": "",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/airbnb.png",
+        "foregroundImage": "s",
         "backgroundColor": "#ffffff"
       }
     },
@@ -23,7 +23,6 @@
       "favicon": ""
     },
     "plugins": [
-      "expo-router",
       [
         "expo-splash-screen",
         {

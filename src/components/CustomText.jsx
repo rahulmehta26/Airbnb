@@ -7,8 +7,8 @@ const CustomText = ({ children, variants = 'medium' , customStyle }) => {
 
   const FontSizes = {
     small: { fontSize: height * 0.025 },
-    medium: { fontSize: height * 0.035 },
-    large: { fontSize: height * 0.045 },
+    medium: { fontSize: height * 0.030 },
+    large: { fontSize: height * 0.040 },
   };
 
   return (
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
     text:{
         color:'black',
-        fontWeight:'semibold'
+        fontWeight:'900',
     }
 })
 
