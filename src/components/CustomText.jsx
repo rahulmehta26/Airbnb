@@ -6,7 +6,8 @@ const CustomText = ({ children, variants = 'medium' , customStyle }) => {
   const { width, height } = useWindowDimensions();
 
   const FontSizes = {
-    small: { fontSize: height * 0.025 },
+    xSmall: { fontSize: height * 0.020 },
+    small: { fontSize: height * 0.0225 },
     medium: { fontSize: height * 0.030 },
     large: { fontSize: height * 0.040 },
   };

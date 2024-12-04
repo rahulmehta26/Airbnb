@@ -5,7 +5,7 @@ const CustomSafeAreaView = ({children, customStyle}) => {
   return (
     <SafeAreaView
     style = {customStyle}
-    className = 'bg-white p-2 flex-1 '
+    className = 'bg-white px-5 py-2 flex-1 w-full h-full '
     >
       {children}
     </SafeAreaView>

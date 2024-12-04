@@ -5,9 +5,8 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
   FontAwesome,
@@ -22,10 +21,33 @@ import Profile from "../screen/dashboard/tabScreens/Profile";
 import Login from "../screen/auth/Login";
 import Bookings from "../screen/dashboard/Bookings";
 import Listing from "../screen/dashboard/Listing";
-import Explore from '../screen/dashboard/tabScreens/Explore'
+import Explore from "../screen/dashboard/tabScreens/Explore";
+import * as SecureStore from "expo-secure-store";
+import { useAuth } from "@clerk/clerk-expo";
+import { useNavigation } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+const CLERK_PUBLISH_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+const getToken = {
+  async getToken(key) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (error) {
+      return null;
+    }
+  },
+
+  async saveToken(key, value) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (error) {
+      return null;
+    }
+  },
+};
 
 function BottomTabs() {
   const { width, heigth } = useWindowDimensions();
@@ -111,8 +133,18 @@ export default function StackTabs() {
 
   const iconSize = width * 0.08;
 
+  const { isLoaded, isSignedIn } = useAuth();
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      navigation.navigate("Login");
+    }
+  }, [isLoaded]);
+
   return (
-    <NavigationContainer>
+    <>
       <StatusBar barStyle={"light-content"} backgroundColor={"black"} />
 
       <Stack.Navigator
@@ -134,23 +166,19 @@ export default function StackTabs() {
             headerShown: true,
             headerTitle: "Login & Signup",
             headerLeftContainerStyle: {
-              flex:1
+              flex: 1,
             },
-            headerTitleAlign:'center',
-            headerTitleStyle:{
-              fontSize:24
+            headerTitleAlign: "center",
+            headerTitleStyle: {
+              fontSize: 24,
             },
             headerLeft: () => (
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => navigation.goBack()}
-                className = 'pl-5'
+                className="pl-5"
               >
-                <Ionicons
-                  name="close-outline"
-                  size={25}
-                  color={"black"}
-                />
+                <Ionicons name="close-outline" size={25} color={"black"} />
               </TouchableOpacity>
             ),
           })}
@@ -162,7 +190,7 @@ export default function StackTabs() {
           options={({ navigation }) => ({
             presentation: "transparentModal",
             headerShown: true,
-            animation:'fade',
+            animation: "fade",
             headerLeft: () => (
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -178,10 +206,14 @@ export default function StackTabs() {
           })}
         />
 
-        <Stack.Screen name="Listings" component={Listing} options={{
-            headerTitle: ''
-        }} />
+        <Stack.Screen
+          name="Listings"
+          component={Listing}
+          options={{
+            headerTitle: "",
+          }}
+        />
       </Stack.Navigator>
-    </NavigationContainer>
+    </>
   );
 }
